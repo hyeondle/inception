@@ -62,16 +62,28 @@ Debian 버전:
 "for performance matters, the containers must be built either from the penultimate stable version of Debian"라는 요구 사항이 있으므로, 현재의 최신 버전이 Debian 12라면, 이전의 안정된 버전인 Debian 11(Bullseye)을 사용해야 함. (buster이 아님)
 
 예시 구성도
+
 외부 : www
+
 컴퓨터 호스트 : db(volume), wordpress(volume)
+
 도커 네트워크(컴퓨터 호스트 안에 포함) : containerDB(mariadb, image docker), containerWordPress+PHP(wordpress, image docker), containerNGINX(nginx, image docker)
+
 도커 네트워크간 연결 구성 :
+
 containerDB <-> db
+
 containerDB <-> ContainerWordPress+PHP (port 3306)
+
 ContainerWordPress+PHP <-> wordpress
+
 ContainerWordPress+PHP <-> ContainerNGINX (port 9000)
+
 ContainerNGINX <-> wordpress
+
 ContainerNGINX <-> www (port 442)
+
 <-> : link network
+
 
 
