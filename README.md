@@ -50,3 +50,13 @@ NGINX : NGINX 설정. SSL/TLS 설정 및 WordPress로의 프록시 설정을 구
 # 그 외
 https://nickjanetakis.com/blog/benchmarking-debian-vs-alpine-as-a-base-docker-image
 를 참고하여, debian을 기준으로 사용하기로 결정함. 
+
+Debian vs. Alpine:
+데비안(Debian)과 알파인(Alpine) 이 두 배포판의 차이점은?
+
+크기: Alpine은 경량화된 리눅스 배포판으로, 컨테이너 환경에서 최소한의 리소스로 실행될 수 있도록 설계되었다. 따라서 이미지 크기가 매우 작음.
+패키지 관리자: Alpine은 apk 패키지 관리자를 사용하는 반면, Debian은 apt 패키지 관리자를 사용.
+안정성과 호환성: Debian은 오랜 기간동안 안정성으로 알려져 왔고, 광범위한 패키지와 라이브러리를 지원함. 즉, Alpine은 경량화되어 있기 때문에 일부 특정 라이브러리나 패키지가 빠져 있을 수 있음.
+
+Debian 버전:
+"for performance matters, the containers must be built either from the penultimate stable version of Debian"라는 요구 사항이 있으므로, 현재의 최신 버전이 Debian 12라면, 이전의 안정된 버전인 Debian 11(Bullseye)을 사용해야 함. (buster이 아님)
