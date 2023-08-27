@@ -46,3 +46,7 @@ WordPress : PHP-FPM 환경을 설정. MariaDB에 연결하기 위한 설정을 �
 NGINX : NGINX 설정. SSL/TLS 설정 및 WordPress로의 프록시 설정을 구성.
 
 이후, docker-compose.yml에서 이러한 의존성을 depends_on 키워드로 정의가 가능 (없어도 상관은 없음)
+
+# 그 외
+https://nickjanetakis.com/blog/benchmarking-debian-vs-alpine-as-a-base-docker-image
+를 참고하여, debian을 기준으로 사용하기로 결정함. 
