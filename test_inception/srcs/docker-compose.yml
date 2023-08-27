@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  nginx:
+    build: 
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    networks:
+      - app-network
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    environment:
+      - DOMAIN_NAME=hyeondle.42.fr
+    restart: always
+
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    environment:
+      - WP_DB_HOST=db
+      - WP_DB_USER=wordpressuser
+      - WP_DB_PASSWORD=password
+      - WP_DB_NAME=wordpress
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    ports:
+      - "9000:9000"
+    restart: always
+
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    volumes:
+      - ./data/database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: always
+
+volumes:
+  database_data:
+  wordpress_data:
+
+networks:
+  app-network:
+    driver: bridge
