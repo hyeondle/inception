@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  containerDB:
+    build: 
+      context: .
+      dockerfile: ./path_to_mariadb_dockerfile/Dockerfile
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: hyeondle
+      MYSQL_PASSWORD: password
+    networks:
+      - mynetwork
+    restart: on-failure
+
+  containerWordPress+PHP:
+    build:
+      context: .
+      dockerfile: ./path_to_wordpress_dockerfile/Dockerfile
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    depends_on:
+      - containerDB
+    networks:
+      - mynetwork
+    restart: on-failure
+
+  containerNGINX:
+    build:
+      context: .
+      dockerfile: ./path_to_nginx_dockerfile/Dockerfile
+    volumes:
+      - wordpress:/var/www/wordpress
+    depends_on:
+      - containerWordPress+PHP
+    ports:
+      - "442:443"
+    networks:
+      - mynetwork
+    restart: on-failure
+
+networks:
+  mynetwork:
+
+volumes:
+  db:
+  wordpress:
