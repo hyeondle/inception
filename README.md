@@ -17,18 +17,18 @@ practice 42's inception
 5. 구성된 서비스들을 유기적으로 연결할 docker-comse.yml 작성 (각 서비스와 볼륨, 네트워크를 정의, 서비스 간 의존성 설정. 도커 네트워크 구성)
 6. Makefile작성 
 
-## 1. 각 디렉토리 생성
+# 1. 각 디렉토리 생성
 
-# 최상위 디렉토리 생성
+## 최상위 디렉토리 생성
 mkdir -p ./Inception/srcs/requirements/{bonus,mariadb,nginx,tools,wordpress}
 
-# mariadb, nginx, wordpress에 필요한 하위 디렉토리 생성
+## mariadb, nginx, wordpress에 필요한 하위 디렉토리 생성
 mkdir -p ./Inception/srcs/requirements/mariadb/{conf,tools}
 mkdir -p ./Inception/srcs/requirements/nginx/{conf,tools}
 mkdir -p ./Inception/srcs/requirements/wordpress/{conf,tools}
 
 
-## 2. 각 서비스에 대한 Dockerfile 작성
+# 2. 각 서비스에 대한 Dockerfile 작성
 
 도커 네트워크를 구성할 때, 각 서비스나 컨테이너가 어떠한 의존성을 가지고 있는지 파악하는 것이 중요.
 현 과제에서는 NGINX, WordPress, MariaDB임.
