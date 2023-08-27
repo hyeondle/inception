@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  containerDB:
+  containerdb:
     build: 
-      context: .
-      dockerfile: ./path_to_mariadb_dockerfile/Dockerfile
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
     volumes:
       - db:/var/lib/mysql
     environment:
@@ -16,26 +16,26 @@ services:
       - mynetwork
     restart: on-failure
 
-  containerWordPress+PHP:
+  containerwordpressphp:
     build:
-      context: .
-      dockerfile: ./path_to_wordpress_dockerfile/Dockerfile
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html/wordpress
     depends_on:
-      - containerDB
+      - containerdb
     networks:
       - mynetwork
     restart: on-failure
 
-  containerNGINX:
+  containernginx:
     build:
-      context: .
-      dockerfile: ./path_to_nginx_dockerfile/Dockerfile
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/wordpress
     depends_on:
-      - containerWordPress+PHP
+      - containerwordpressphp
     ports:
       - "442:443"
     networks:
