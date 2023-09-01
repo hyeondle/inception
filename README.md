@@ -27,6 +27,8 @@ mkdir -p ./Inception/srcs/requirements/mariadb/{conf,tools}
 mkdir -p ./Inception/srcs/requirements/nginx/{conf,tools}
 mkdir -p ./Inception/srcs/requirements/wordpress/{conf,tools}
 
+## Virtualbox 에서 공유폴더 사용 방법
+mount -t vboxsf ${공유폴더} ${가상머신 내 폴더}
 
 # 2. 각 서비스에 대한 Dockerfile 작성
 
