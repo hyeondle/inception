@@ -24,7 +24,9 @@ mkdir -p ./Inception/srcs/requirements/{bonus,mariadb,nginx,tools,wordpress}
 
 ## mariadb, nginx, wordpress에 필요한 하위 디렉토리 생성
 mkdir -p ./Inception/srcs/requirements/mariadb/{conf,tools}
+
 mkdir -p ./Inception/srcs/requirements/nginx/{conf,tools}
+
 mkdir -p ./Inception/srcs/requirements/wordpress/{conf,tools}
 
 ## Virtualbox 에서 공유폴더 사용 방법
@@ -32,9 +34,13 @@ mount -t vboxsf ${공유폴더} ${가상머신 내 폴더}
 
 ## Docker 설치
 sudo apt update
+
 sudo apt install -y curl
+
 curl -fsSL https://get.docker.com -o get-docker.sh
+
 sudo sh get-docker.sh
+
 sudo usermod -aG docker $USER
 
 마지막 줄은 루트가 아닌 사용자도 도커를 사용하도록 하는 명령어이므로, sudo나 root로 진행시 입력하지 않아도 된다
