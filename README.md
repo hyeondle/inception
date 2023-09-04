@@ -17,7 +17,7 @@ practice 42's inception
 5. 구성된 서비스들을 유기적으로 연결할 docker-comse.yml 작성 (각 서비스와 볼륨, 네트워크를 정의, 서비스 간 의존성 설정. 도커 네트워크 구성)
 6. Makefile작성 
 
-# 1. 각 디렉토리 생성
+# 1. 기본 세팅
 
 ## 최상위 디렉토리 생성
 mkdir -p ./Inception/srcs/requirements/{bonus,mariadb,nginx,tools,wordpress}
@@ -29,6 +29,15 @@ mkdir -p ./Inception/srcs/requirements/wordpress/{conf,tools}
 
 ## Virtualbox 에서 공유폴더 사용 방법
 mount -t vboxsf ${공유폴더} ${가상머신 내 폴더}
+
+## Docker 설치
+sudo apt update
+sudo apt install -y curl
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+마지막 줄은 루트가 아닌 사용자도 도커를 사용하도록 하는 명령어이므로, sudo나 root로 진행시 입력하지 않아도 된다
 
 # 2. 각 서비스에 대한 Dockerfile 작성
 
