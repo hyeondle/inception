@@ -1,0 +1,8 @@
+[mysqld]
+user			= mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+secure_file_priv= NULL
+
+# 기타 필요한 설정을 여기에 추가하십시오.
