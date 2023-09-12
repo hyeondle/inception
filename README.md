@@ -64,6 +64,44 @@ NGINX : NGINX 설정. SSL/TLS 설정 및 WordPress로의 프록시 설정을 구
 
 이후, docker-compose.yml에서 이러한 의존성을 depends_on 키워드로 정의가 가능 (없어도 상관은 없음)
 
+# 3. 각 서비스에 대한 설정파일 및 스크립트 작성
+
+이번 과제에서는 DockerHub상에 존재하는 이미지를 불러오는 것이 아닌,
+서비스중인 최신버전 이전의 버전의 Debian 혹은 Alpine의 이미지로부터 시작해 하나하나 이미지를 작성하여야 한다.
+(For performance matters, the containers must be built either from the penultimate stable version of Alpine or Debian)
+즉, Dockerfile에서 FROM mariadb 와 같은 명령어는 사용 불가능 하며, FROM debian:bullseye(현 최신버전이 12, bookworm)와 같은방식으로
+raw 이미지를 불러와 하나의 가상머신처럼 만든 뒤, 필요한 패키지만을 설치, 세팅하도록 하는 것이다.
+
+각각의 과제 요구사항에 맞게 필요한 최소한의 패키지만을 설치한 뒤, 추가적인 세팅은 미리 세팅파일을 만들어 두어 옮기거나
+스크립트 파일을 이용해 명령어를 입력하도록 한다.
+
+# 4. docker-compose.yml 작성
+
+만들어둔 3개의 도커파일을 통해 docker-compose로 이 이미지들을 동일 네트워크상에 두고, 과제에서 요구하는 볼륨 설정 및 기타 설정들을 수행한다.
+
+## Volume 경로 작성 및 권한 설정
+
+해당 과제에서 요구하는 Volume의 위치가 /home/login/data (login은 자신의 id로 변경)인데,
+Makefile단계에서 조건문을 이용하여 폴더를 생성 및 삭제해도 되지만, 권한문제가 발생할 수 있으므로 먼저
+해당 위치에 db/, wordpress/ 폴더를 생성해 둔다.
+물론, docker-compose.yml에서 'device:'명령어를 통해 각각의 볼륨의 위치를 지정해 주는것도 필요하다. 
+
+# 5. Makefile 작성 및 실행
+
+'docker-compose'가 아닌 'docker compose'이다.
+docker compose를 사용하여 빌드하도록 명령어를 구성하고 실행해 본다.
+
+# 6. 로그 확인 및 수정
+
+에러 발생시 로그를 확인하며 수정, 또한 기타 이상한 작동이 발견됬을 때 로그를 확인하여 빠른 원인파악이 가능하다.
+docker logs $(container_name)로 확인 가능하다.
+그 외에, 각 컨테이너간 연결을 확인하고 싶다면 각 컨테이너에
+apt-get install curl
+을 통해 curl을 설치한 후, 컨테이너 외부에서
+docker exec -it $(container1) curl $(container2)를 통해 확인 가능하다.
+포트 지정은 $(container2):$(portnumber)로 가능하다.
+
+
 # 그 외
 https://nickjanetakis.com/blog/benchmarking-debian-vs-alpine-as-a-base-docker-image
 를 참고하여, debian을 기준으로 사용하기로 결정함. 
