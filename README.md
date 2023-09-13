@@ -87,9 +87,51 @@ raw 이미지를 불러와 하나의 가상머신처럼 만든 뒤, 필요한 �
 
 ## MariaDB
 
+### Dockerfile
+
+"A Docker container that contains MariaDB only without nginx."구문에 설마?할 수 있지만
+
+apt-get install mariadb만 해서는 nginx가 같이 깔리지 않는다. 물론 mariadb도커 이미지를 불러와도 그렇다.
+
+따라서 그냥 설치하면 된다.
+
+다만, 여기서 mariadb-server을 설치하기로 결정했는데, 그 이유는
+
+이 과제에서 요구하는 내용이 단순한 db연결로의 기능만 구현하면 된다는 점,
+
+용량이 작게 제한되어있는 클러스터 맥의 특성상 최대한 용량을 줄여보려는 노력,
+
+설치 내용이 적기때문에 오류발생시 처리가 더 간편하다는 점 때문이다.
+
+### conf file
+
+mariadb에서 설정파일을 로드할 때, 알파벳순으로 로드하여 세팅이 덮어씌어진다.
+
+따라서 내가 default.cnf에 여러가지 세팅을 해 두더라도, 후에 50-server.cnf라는 파일에서
+
+그 설정들이 초기화 될 가능성이 있다는 것이다.
+
+따라서 해당 위험을 없애기 위해 default.cnf가 아닌 50-server.cnf를 직접 수정하여 덮어씌우는 방법으로 작성한다.
+
+### init file
+
+모든 기본적인 세팅이 완료된 후, 초기 실행상태에서는 mariadb의 데이터베이스가 생성되어있지 않은 상태다.
+
+따라서 mysql_install_db를 통해 데이터베이스를 만들고, wordpress에서 접근할 수 있도록 데이터베이스 그룹과
+
+유저를 추가해 주어야 한다.
+
+주의점은 PID를 잘 생각해야 한다는 것이다. 
+
+(데이터베이스를 만들 경우 mysql을 한번 실행하는데, 이 상태에서 마무리할 경우 또 하위의 mysql이 실행되어
+
+PID가 1이 아닌 상황이 발생해 추후 에러가 발생할 가능성이 높아진다. 따라서, 데이터베이스 초기화 후 선실행한 mysql을 종료해야한다)
+
 ## Wordpress(+PHP)
 
+
 ## NGINX
+
 
 # 4. docker-compose.yml 작성
 
