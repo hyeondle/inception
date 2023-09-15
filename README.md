@@ -246,5 +246,7 @@ ContainerNGINX <-> www (port 442)
 
 <-> : link network
 
+PID 1 의 의미
 
+: 도커 컨테이너 하나당 하나의 프로세스라는 원칙을 생각한다면, PID 1 의 의미를 이해할 수 있다.
 
