@@ -16,6 +16,8 @@ if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
 
 sleep 10
 
+mysqladmin -u root password "$MYSQL_ROOT_PASSWORD"
+
 mysql -u root <<-EOSQL
 CREATE DATABASE $MYSQL_DATABASE;
 CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
