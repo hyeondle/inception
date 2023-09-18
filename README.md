@@ -204,6 +204,13 @@ docker exec -it $(container1) curl $(container2)를 통해 확인 가능하다.
 
 포트 지정은 $(container2):$(portnumber)로 가능하다.
 
+추가로, 정상적으로 빌드가 완료되었을 시,
+
+curl hyeondle.42.fr:80
+
+curl hyeondle.42.fr:443
+
+으로 http와 https연결 확인이 가능하다.
 
 # 그 외
 https://nickjanetakis.com/blog/benchmarking-debian-vs-alpine-as-a-base-docker-image
